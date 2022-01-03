@@ -13,4 +13,14 @@ public class Block extends GameObject {
         physics().preventIntersectionsFromDirection(Vector2.ZERO);
         physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
     }
+    public static int round(float x){
+        int z;
+        if (x < 0) {
+            z = (int) Math.floor((double) x / Block.SIZE) * Block.SIZE;
+        } else {
+            z = (int) Math.ceil((double) x / Block.SIZE) * Block.SIZE;
+        }
+        return z;
+    }
+
 }
