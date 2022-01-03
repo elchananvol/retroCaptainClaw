@@ -30,11 +30,15 @@ public class Tree {
 
 
     private void createTree(int locationX, int height){
+        Vector2 treeSize =new Vector2(Block.SIZE, height*Block.SIZE);
+        Vector2 treeTopLeftCorner =new Vector2(locationX, terrain.groundHeightAt(locationX) - height*Block.SIZE);
 
-        for(float i= terrain.groundHeightAt(locationX) - Block.SIZE; i>=  terrain.groundHeightAt(locationX) - height*Block.SIZE;i-=Block.SIZE){
-            Block block = new Block(new Vector2(locationX, i), new RectangleRenderable(TREE_COLOR));
-            gameObjects.addGameObject(block,layer);
-        }
+        Block block = new Block(treeTopLeftCorner, treeSize, new RectangleRenderable(TREE_COLOR));
+        gameObjects.addGameObject(block,layer);
+//        for(float i= terrain.groundHeightAt(locationX) - Block.SIZE; i>=  terrain.groundHeightAt(locationX) - height*Block.SIZE;i-=Block.SIZE){
+//            Block block = new Block(new Vector2(locationX, i), new RectangleRenderable(TREE_COLOR));
+//            gameObjects.addGameObject(block,layer);
+//        }
 //        Block block = new Block(new Vector2(locationX, (int)windowDimensions.y() - terrain.groundHeightAt(locationX)), new RectangleRenderable(Color.cyan));
 //        gameObjects.addGameObject(block,layer+1);
         new leaves(gameObjects,layer,locationX,height,terrain.groundHeightAt(locationX),terrain);
