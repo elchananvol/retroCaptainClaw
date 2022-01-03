@@ -31,7 +31,7 @@ public class Tree {
 
     private void createTree(int locationX, int height){
 
-        for(int i= terrain.groundHeightAt(locationX); i>=  terrain.groundHeightAt(locationX) - height*Block.SIZE;i-=Block.SIZE){
+        for(float i= terrain.groundHeightAt(locationX) - Block.SIZE; i>=  terrain.groundHeightAt(locationX) - height*Block.SIZE;i-=Block.SIZE){
             Block block = new Block(new Vector2(locationX, i), new RectangleRenderable(TREE_COLOR));
             gameObjects.addGameObject(block,layer);
         }

@@ -27,10 +27,10 @@ public class Terrain {
 
     }
 
-    public int groundHeightAt(float x) {
-        x =Block.round(x);
-
-        return Block.round((float)(windowDimensions.y()-noiseGenerator.noise((double) x) * Block.SIZE * 5 - windowDimensions.y() / 4));
+    public float groundHeightAt(float x) {
+//        x =Block.round(x);
+        x= (int) Math.floor( x / (Block.SIZE*3)) * Block.SIZE*3;
+        return windowDimensions.y()-  Block.round((float) noiseGenerator.noise((double) x) * Block.SIZE * 5 + windowDimensions.y() / 4);
     }
 
     public void createInRange(int minX, int maxX) {

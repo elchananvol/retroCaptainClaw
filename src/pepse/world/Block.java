@@ -12,15 +12,17 @@ public class Block extends GameObject {
         super(topLeftCorner, Vector2.ONES.mult(SIZE), renderable);
         physics().preventIntersectionsFromDirection(Vector2.ZERO);
         physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
+
     }
     public static int round(float x){
-        int z;
-        if (x < 0) {
-            z = (int) Math.floor((double) x / Block.SIZE) * Block.SIZE;
-        } else {
-            z = (int) Math.ceil((double) x / Block.SIZE) * Block.SIZE;
-        }
-        return z;
+            return (int) Math.floor((double) x / Block.SIZE) * Block.SIZE;
     }
+    public Block(Vector2 topLeftCorner,Vector2 dimension, Renderable renderable) {
+        super(topLeftCorner, dimension, renderable);
+        physics().preventIntersectionsFromDirection(Vector2.ZERO);
+        physics().setMass(GameObjectPhysics.IMMOVABLE_MASS);
+
+    }
+
 
 }

@@ -22,16 +22,16 @@ public class leaves {
     private final Terrain terrain;
     private final Random random = new Random();
 
-    public leaves(GameObjectCollection gameObjects, int layer, int locationX, int height, int groundHeight,Terrain terrain) {
+    public leaves(GameObjectCollection gameObjects, int layer, int locationX, int height, float groundHeight,Terrain terrain) {
         this.gameObjects = gameObjects;
         this.layer = layer;
         this.terrain =terrain;
         create(locationX, height, groundHeight);
     }
 
-    private void create(int locationX, int height, int groundHeight) {
+    private void create(int locationX, int height, float groundHeight) {
         int square = (height / 3)*Block.SIZE;
-        for (int y = groundHeight - height*Block.SIZE-square; y <= groundHeight - height*Block.SIZE + square; y+=Block.SIZE) {
+        for (float y = groundHeight - height*Block.SIZE-square; y <= groundHeight - height*Block.SIZE + square; y+=Block.SIZE) {
             for (int x = -square; x <= square; x+=Block.SIZE) {
                 if (x != 0 && random.nextDouble()<0.7) {
                     Block leaf = new leaf(new Vector2(x+locationX, y),terrain);

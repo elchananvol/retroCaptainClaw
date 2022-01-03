@@ -8,6 +8,7 @@ import danogl.collisions.Layer;
 import danogl.gui.*;
 import danogl.util.Vector2;
 import pepse.world.Avatar;
+import pepse.world.Block;
 import pepse.world.Sky;
 import pepse.world.Terrain;
 import pepse.world.daynight.Night;
@@ -39,6 +40,10 @@ public class PepseGameManager extends GameManager {
         pepse.world.treee.Tree trees = new pepse.world.treee.Tree(gameObjects(),Layer.FOREGROUND +3, windowController.getWindowDimensions(),terrain);
         trees.createInRange(0,(int)windowController.getWindowDimensions().x());
         Avatar.create(gameObjects(),Layer.UI,Vector2.ZERO,inputListener,imageReader);
+        int x=(int) Math.floor((double) -50 / (Block.SIZE*3)) * Block.SIZE*3;
+        int z= (int) Math.floor((double) 50 / (Block.SIZE*3)) * Block.SIZE*3;
+        System.out.printf("%d,%d",x,z);
+
 
     }
 
