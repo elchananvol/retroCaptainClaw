@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class PepseGameManager extends GameManager {
     private static final Color SUN_HALO_COLOR = new Color(255, 255, 0, 40);
-    private static final String PATH_TO_NUSIC = "pepse/assets/clawmusic/Level 1.mid";
+    private static final String PATH_TO_NUSIC = "pepse/assets/clawmusic/Level_1.wav";
     private static final Random random = new Random();
     private static final int INITIAL_AVATAR_LOCATION_X = 0;
     private static final float WINDOW_SIZE = 1.5f;
@@ -48,20 +48,19 @@ public class PepseGameManager extends GameManager {
 
         this.terrain = new Terrain(gameObjects(), Layer.STATIC_OBJECTS, windowController.getWindowDimensions(), 10);
 
-        this.trees = new pepse.world.trees.Tree(gameObjects(), Layer.STATIC_OBJECTS+1, windowDimensions, random.nextInt(), terrain);
+        this.trees = new pepse.world.trees.Tree(gameObjects(), Layer.STATIC_OBJECTS + 1, windowDimensions, random.nextInt(), terrain);
 
         Vector2 initialAvatarLocation = new Vector2(INITIAL_AVATAR_LOCATION_X, terrain.groundHeightAt(INITIAL_AVATAR_LOCATION_X) - Avatar.IMAGE_SIZE);
         this.avatar = Avatar.create(gameObjects(), Integer.MAX_VALUE, initialAvatarLocation, inputListener, imageReader);
-        terrain.createInRange((int)(INITIAL_AVATAR_LOCATION_X + windowDimensions.x()*-WINDOW_SIZE),(int)(INITIAL_AVATAR_LOCATION_X +windowDimensions.x()*WINDOW_SIZE));
-        trees.createInRange((int)(INITIAL_AVATAR_LOCATION_X +windowDimensions.x()*-WINDOW_SIZE),(int)( INITIAL_AVATAR_LOCATION_X +windowDimensions.x()*WINDOW_SIZE));
+        terrain.createInRange((int) (INITIAL_AVATAR_LOCATION_X + windowDimensions.x() * -WINDOW_SIZE), (int) (INITIAL_AVATAR_LOCATION_X + windowDimensions.x() * WINDOW_SIZE));
+        trees.createInRange((int) (INITIAL_AVATAR_LOCATION_X + windowDimensions.x() * -WINDOW_SIZE), (int) (INITIAL_AVATAR_LOCATION_X + windowDimensions.x() * WINDOW_SIZE));
         this.gameObjects().layers().shouldLayersCollide(Integer.MAX_VALUE, Layer.STATIC_OBJECTS, true);
-        this.gameObjects().layers().shouldLayersCollide(Integer.MAX_VALUE, Layer.STATIC_OBJECTS+1, true);
-//        setCamera(new Camera(avatar, Vector2.ZERO,
-//                windowController.getWindowDimensions(),
-//                windowController.getWindowDimensions()));
+        this.gameObjects().layers().shouldLayersCollide(Integer.MAX_VALUE, Layer.STATIC_OBJECTS + 1, true);
+        setCamera(new Camera(avatar, Vector2.ZERO,
+                windowController.getWindowDimensions(),
+                windowController.getWindowDimensions()));
 //        EnemyFactory enmeis= new EnemyFactory(gameObjects(),Layer.UI,terrain,random.nextInt());
 //        enmeis.createInRange((int)(INITIAL_AVATAR_LOCATION_X + windowDimensions.x()*-WINDOW_SIZE),(int)(INITIAL_AVATAR_LOCATION_X +windowDimensions.x()*WINDOW_SIZE));
-
 
 
         //        String solider_path = "clow/claw_art/soldier.gif";
