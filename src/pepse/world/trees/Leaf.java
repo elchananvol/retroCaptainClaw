@@ -1,39 +1,37 @@
-package pepse.world.treee;
+package pepse.world.trees;
 
-import danogl.GameObject;
-import danogl.components.CoordinateSpace;
 import danogl.components.ScheduledTask;
 import danogl.components.Transition;
 import danogl.gui.rendering.RectangleRenderable;
-import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
-import pepse.util.nested;
 import pepse.world.Block;
 import pepse.world.Terrain;
 
 import java.awt.*;
 import java.util.Random;
 
-public class leaf extends Block {
+public class Leaf extends Block {
     private static final Color LEAVE_COLOR = new Color(50, 200, 30);
     private static final float FADEOUT_TIME = 30;
-    private final Random random = new Random();
+    private final Random random;
     private final Vector2 initial;
     private final Terrain terrain;
 
-    public leaf(Vector2 topLeftCorner, Terrain terrain) {
+    public Leaf(Vector2 topLeftCorner, Terrain terrain) {
         super(topLeftCorner, new RectangleRenderable(LEAVE_COLOR));
-        setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
+//        setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
         this.initial = topLeftCorner;
+        this.random = new Random();
 
-        this.terrain =terrain;
+        this.terrain = terrain;
         new ScheduledTask(this,
-                random.nextFloat()*10, false,this::run);
+                random.nextFloat() * 10, false, this::windShaking);
 
         startCycle();
 
     }
-    private void startCycle(){
+
+    private void startCycle() {
         setTopLeftCorner(initial);
         renderer().setOpaqueness(1f);
         setVelocity(Vector2.ZERO);
@@ -57,34 +55,42 @@ public class leaf extends Block {
                 null);
         float death_time = random.nextFloat() * 10;
         new ScheduledTask(this,
-                death_time +FADEOUT_TIME,
+                death_time + FADEOUT_TIME,
                 false,
                 this::startCycle);
 
     }
-    public void run() {
+
+    public void drop(float angle) {
+        if (getCenter().y() <= terrain.groundHeightAt(getCenter().x())) {
+            setVelocity(new Vector2(angle * 30, 30));
+        } else {
+            setVelocity(Vector2.ZERO);
+        }
+    }
+
+
+    public void windShaking() {
         new Transition<Float>(
                 this, // the game object being changed
-                this::consumer, // the method to call
-                random.nextFloat(-20f,20f), // initial transition value
-                random.nextFloat(-20f,20f), // final transition value
+                this::shake, // the method to call
+                random.nextFloat(-20f, 20f), // initial transition value
+                random.nextFloat(-20f, 20f), // final transition value
                 Transition.LINEAR_INTERPOLATOR_FLOAT, // use a cubic interpolator
                 10, // transtion fully over half a day
                 Transition.TransitionType.TRANSITION_LOOP,
                 null);
     }
-    public void consumer(float angle) {
-        renderer().setRenderableAngle(angle);
-//                            leaf.setDimensions();
-        setCenter(getCenter().add(new Vector2(random.nextFloat(-0.2f,0.2f),random.nextFloat(-0.2f,0.2f))));
-        setDimensions(new Vector2(Math.max(getDimensions().x()+random.nextFloat(-0.2f,0.2f),0.1f),getDimensions().y()));
-    }
-    public void drop(float angle){
+
+
+    public void shake(float angle) {
         if (getCenter().y() <= terrain.groundHeightAt(getCenter().x())) {
-            setVelocity(new Vector2(angle*30, 30));
-        }
-        else{
-            setVelocity(Vector2.ZERO);
+            renderer().setRenderableAngle(angle);
+//                            leaf.setDimensions();
+            setCenter(getCenter().add(new Vector2(random.nextFloat(-0.2f, 0.2f), random.nextFloat(-0.2f, 0.2f))));
+            setDimensions(new Vector2(Math.max(getDimensions().x() + random.nextFloat(-0.2f, 0.2f), 0.1f), getDimensions().y()));
         }
     }
+
+
 }

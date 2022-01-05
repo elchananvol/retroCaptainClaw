@@ -9,13 +9,19 @@ import pepse.util.ColorSupplier;
 import pepse.util.NoiseGenerator;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class Terrain {
     private final GameObjectCollection gameObjects;
+    public static final int GROUND_SIZE = Block.SIZE*3;
     private final int groundLayer;
     private final NoiseGenerator noiseGenerator;
     private static final Color BASE_GROUND_COLOR = new Color(212, 123, 74);
     private final Vector2 windowDimensions;
+    private final HashMap<Integer,Block> map = new HashMap<Integer,Block>();
+    private final HashMap<Integer,Float> mapGroundHeight = new HashMap<Integer,Float>();
+
+
 
     public Terrain(GameObjectCollection gameObjects,
                    int groundLayer, Vector2 windowDimensions,
@@ -28,31 +34,39 @@ public class Terrain {
     }
 
     public float groundHeightAt(float x) {
-//        x =Block.round(x);
-        x= (int) Math.floor( x / (Block.SIZE*3)) * Block.SIZE*3;
-        return windowDimensions.y()-  Block.round((float) noiseGenerator.noise((double) x) * Block.SIZE * 10 + windowDimensions.y() / 4);
+        int z= round(x);
+        if (!mapGroundHeight.containsKey(z))
+        {
+            mapGroundHeight.put(z,windowDimensions.y()-  Block.round((float) noiseGenerator.noise(z) * Block.SIZE * 10 + windowDimensions.y() / 4));
+        }
+        return mapGroundHeight.get(z);
     }
 
     public void createInRange(int minX, int maxX) {
         assert maxX >= minX;
-        minX = (int) Math.floor( (float)minX / (Block.SIZE*3)) * Block.SIZE*3;
-        maxX = (int) Math.floor((float) maxX / (Block.SIZE*3)) * Block.SIZE*3;
-        for (int i = minX; i <= maxX; i += Block.SIZE*3 ) {
-            GameObject block = new Block(new Vector2(i,  groundHeightAt(i)), new Vector2(Block.SIZE*3, windowDimensions.y()-groundHeightAt(i)), new RectangleRenderable(ColorSupplier.approximateColor(BASE_GROUND_COLOR)));
+        minX = round(minX);
+        maxX = round(maxX);
+        for (int i = minX; i <= maxX; i += GROUND_SIZE ) {
+            Block block = new Block(new Vector2(i,  groundHeightAt(i)), new Vector2(GROUND_SIZE, windowDimensions.y()*2f -groundHeightAt(i)), new RectangleRenderable(ColorSupplier.approximateColor(BASE_GROUND_COLOR)));
+            map.put(i,block);
             gameObjects.addGameObject(block, groundLayer);
-
-//            for (int j = i; j <= i + Block.SIZE * 2; j += Block.SIZE) {
-//                for (int hight = (int)windowDimensions.y() - Block.SIZE; hight >= (int)groundHeightAt(i); hight -= Block.SIZE) {
-//                    Vector2 location = new Vector2(i,  hight);
-//                    GameObject block = new Block(location, new RectangleRenderable(ColorSupplier.approximateColor(BASE_GROUND_COLOR)));
-//                    gameObjects.addGameObject(block, groundLayer);
-//                }
-//            }
-
-
         }
 
 
+    }
+    public void deleteInRange(int minX, int maxX){
+        minX = round(minX);
+        maxX = round(maxX);
+        for(int x= minX;x<= maxX;x+=   Block.SIZE){
+            if(map.containsKey(x)){
+                gameObjects.removeGameObject(map.get(x),groundLayer);
+                map.remove(x);
+            }
+
+        }
+    }
+    public static int round(float x){
+        return (int) Math.floor((double) x / GROUND_SIZE) *GROUND_SIZE;
     }
 
 
