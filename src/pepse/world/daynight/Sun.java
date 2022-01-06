@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class Sun {
     private final static String TAG ="sun";
     private static final Color BASIC_SUN_COLOR =Color.decode("#f8e26b");
-    private static final float SUN_SIZE =1F ;
+    private static final float SUN_SIZE =0.1F ;
 
 
     /**
