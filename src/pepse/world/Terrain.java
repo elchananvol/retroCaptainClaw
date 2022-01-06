@@ -1,8 +1,6 @@
 package pepse.world;
 
-import danogl.GameObject;
 import danogl.collisions.GameObjectCollection;
-import danogl.collisions.Layer;
 import danogl.gui.rendering.RectangleRenderable;
 import danogl.util.Vector2;
 import pepse.util.ColorSupplier;
@@ -13,7 +11,7 @@ import java.util.HashMap;
 
 public class Terrain {
     private final GameObjectCollection gameObjects;
-    public static final int GROUND_SIZE = Block.SIZE*3;
+    public static final int GROUND_SIZE = Block.SIZE*4;
     private final int groundLayer;
     private final NoiseGenerator noiseGenerator;
     private static final Color BASE_GROUND_COLOR = new Color(212, 123, 74);

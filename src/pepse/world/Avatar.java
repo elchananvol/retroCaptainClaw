@@ -1,51 +1,59 @@
 package pepse.world;
 
 import danogl.GameObject;
+import danogl.collisions.Collision;
 import danogl.collisions.GameObjectCollection;
 import danogl.collisions.Layer;
 import danogl.components.CoordinateSpace;
 import danogl.gui.ImageReader;
 import danogl.gui.UserInputListener;
-import danogl.gui.rendering.AnimationRenderable;
 import danogl.gui.rendering.ImageRenderable;
-import danogl.gui.rendering.Renderable;
 import danogl.gui.rendering.TextRenderable;
+
 import danogl.util.Counter;
 import danogl.util.Vector2;
 
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
+
 
 public class Avatar extends GameObject {
 
-    private static final String PATH_TO_IMG_RIGHT = "pepse/assets/claw_art/RUN.GIF";
-    private static final String PATH_TO_IMG ="pepse/assets/claw_art/PUNCH.gif";
-    private static final float MOVEMENTS_SPEED = 300;
-    public static final int IMAGE_SIZE =70;
+    private static final String PATH_TO_IMG_RIGHT = "src/pepse/assets/claw_art/RUN.GIF";
+    private static final String PATH_TO_IMG = "pepse/assets/claw_art/PUNCH.gif";
+    private static final float MOVEMENTS_SPEED = 400;
+    public static final int IMAGE_SIZE =150;
     private final UserInputListener inputListener;
     private final ImageReader imageReader;
     private final ImageRenderable image_right;
     private final ImageRenderable img;
     private final GameObject text_obj;
-    private float energyCounter= 200f;
+    private final GameObjectCollection gameObjects;
+    private final Counter energyCounter;
+    private final Counter counter_treasure;
+    private boolean wait =false;
 
     public Avatar(Vector2 topLeftCorner, Vector2 dimensions,
                   UserInputListener inputListener,
-                  ImageReader imageReader,GameObjectCollection gameObjects) {
+                  ImageReader imageReader,GameObjectCollection gameObjects,Counter counter,Counter counter_treasure) {
 
         super(topLeftCorner, dimensions, imageReader.readImage(PATH_TO_IMG, true));
         this.inputListener =inputListener;
         this.imageReader =imageReader;
+
         image_right = new ImageRenderable(Toolkit.getDefaultToolkit().createImage(PATH_TO_IMG_RIGHT));
         img = imageReader.readImage(PATH_TO_IMG, true);
-//        transform().setAccelerationY(5000);
+        transform().setAccelerationY(5000);
         physics().preventIntersectionsFromDirection(Vector2.ZERO);
 
-        TextRenderable text = new TextRenderable("energy: " +Float.toString(energyCounter));
+        TextRenderable text = new TextRenderable("");
         this.text_obj =new GameObject(Vector2.ZERO,new Vector2(30,40),text);
         text_obj.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
-        gameObjects.addGameObject(text_obj,Integer.MAX_VALUE -1);
+        this.gameObjects =gameObjects;
+        this.gameObjects.addGameObject(text_obj,Integer.MAX_VALUE -1);
+        this.energyCounter =counter;
+        this.counter_treasure= counter_treasure;
 
 
 
@@ -66,12 +74,12 @@ public class Avatar extends GameObject {
     public static Avatar create(GameObjectCollection gameObjects,
                                 int layer, Vector2 topLeftCorner,
                                 UserInputListener inputListener,
-                                ImageReader imageReader){
+                                ImageReader imageReader, Counter energy_counter,Counter counter_treasure){
 
 //        ImageRenderable image = new ImageRenderable(Toolkit.getDefaultToolkit().createImage(PATH_TO_IMG_LEFT));
 //        ImageRenderable coin = new ImageRenderable(Toolkit.getDefaultToolkit().createImage("clow/claw_art/coin.gif"));
 //        ImageRenderable img = imageReader.readImage(PATH_TO_IMG_RIGHT, true);
-        Avatar avatar = new Avatar(topLeftCorner, Vector2.ONES.mult(IMAGE_SIZE),inputListener,imageReader,gameObjects);
+        Avatar avatar = new Avatar(topLeftCorner, Vector2.ONES.mult(IMAGE_SIZE),inputListener,imageReader,gameObjects,energy_counter,counter_treasure);
         gameObjects.addGameObject(avatar, layer);
         return avatar;
 
@@ -100,23 +108,41 @@ public class Avatar extends GameObject {
         }
 
 
-        if(inputListener.isKeyPressed(KeyEvent.VK_SPACE) && inputListener.isKeyPressed(KeyEvent.VK_SHIFT) && energyCounter>0f){
+        if(inputListener.isKeyPressed(KeyEvent.VK_SPACE) && inputListener.isKeyPressed(KeyEvent.VK_SHIFT) && energyCounter.value()>0){
 
             movement = movement.add(Vector2.UP);
-            energyCounter -= 0.5f;
+            energyCounter.decrement();
 //            renderer().setRenderable(img);
 
         }
         else {
-            energyCounter += 0.5f;
+            energyCounter.increment();
         }
+
+
         movement= movement.mult(MOVEMENTS_SPEED);
         setVelocity(movement);
-//        text_obj.renderer().setRenderable(new TextRenderable("energy: " +Float.toString(energyCounter)));
+        text_obj.renderer().setRenderable(new TextRenderable("energy: " +Integer.toString(energyCounter.value())));
 
 
 //        setVelocity(movement.mult(MOVEMENTS_SPEED));
     }
 
+    @Override
+    public void onCollisionStay(GameObject other, Collision collision) {
+        if( other instanceof enemy) {
+            enemy otherr = (enemy) other;
+            energyCounter.decrement();
+
+            if (inputListener.isKeyPressed(KeyEvent.VK_CONTROL)) {
+                TreasureFactory.create(gameObjects,other.getCenter(),counter_treasure);
+                gameObjects.removeGameObject(other, Layer.UI);
+
+            }
+        }
+    }
+
 
 }
+
+

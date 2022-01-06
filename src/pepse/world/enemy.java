@@ -1,33 +1,43 @@
 package pepse.world;
 
 import danogl.GameObject;
-import danogl.components.GameObjectPhysics;
+import danogl.collisions.Collision;
 import danogl.gui.rendering.Renderable;
+import danogl.util.Counter;
 import danogl.util.Vector2;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class enemy extends GameObject {
 
+    private static final int MAX_SPPED = 400;
+    private static final int MIN_SPEED = 30;
     private final float initialX;
-    private final static Random random = new Random();
-    private final static int range = random.nextInt(5 * Block.SIZE, 50 * Block.SIZE);
+    private final int range;
     private final static int MOVEMENTS_SPEED = 400;
     private final Terrain terrain;
     private final Vector2 dimensions;
+    private final Random random;
+
     private boolean wait = false;
+    private Vector2 savedVelocity =null;
 
 
-    public enemy(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Terrain terrain,int speed) {
+    public enemy(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Terrain terrain, int seed) {
         super(topLeftCorner, dimensions, renderable);
         this.initialX = topLeftCorner.x();
-        setVelocity(Vector2.RIGHT.mult(speed));
+        this.random = new Random(Objects.hash(initialX, seed));
+        range = random.nextInt(5 * Terrain.GROUND_SIZE, 50 * Terrain.GROUND_SIZE);
+        renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
+        setVelocity(Vector2.RIGHT.mult(random.nextInt(MIN_SPEED,MAX_SPPED)));
 //        if (random.nextBoolean()) {
 //            setVelocity(getVelocity().mult(-1));
 //            renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
 //        }
         this.dimensions=dimensions;
         this.terrain = terrain;
+
 //        transform().setAccelerationY(1000);
 //        physics().preventIntersectionsFromDirection(Vector2.DOWN);
     }
@@ -60,7 +70,8 @@ public class enemy extends GameObject {
 //            setVelocity(Vector2.LEFT.mult(MOVEMENTS_SPEED));
 //
 //        }
-        setTopLeftCorner(new Vector2(locationX,terrain.groundHeightAt(locationX)-dimensions.y()));
+//        setTopLeftCorner(new Vector2(locationX,Math.min(terrain.groundHeightAt(locationX),terrain.groundHeightAt(locationX-dimensions.x()))-dimensions.y()));
+        setTopLeftCorner(new Vector2(locationX,terrain.groundHeightAt(getCenter().x())-dimensions.y()));
 
 
 //                || Terrain.round(initialX )+Terrain.GROUND_SIZE-5 -Avatar.IMAGE_SIZE <=getTopLeftCorner().x() ) && !wait){
@@ -92,4 +103,26 @@ public class enemy extends GameObject {
 
     }
 
+    @Override
+    public boolean shouldCollideWith(GameObject other) {
+        return other instanceof Avatar;
+    }
+
+    @Override
+    public void onCollisionEnter(GameObject other, Collision collision) {
+            savedVelocity = new Vector2(getVelocity().x(),getVelocity().y());
+            setVelocity(Vector2.ZERO);
+    }
+
+
+    @Override
+    public void onCollisionExit(GameObject other) {
+        setVelocity(savedVelocity);
+//        System.out.println(savedVelocity);
+//        savedVelocity =null;
+//        if (life_counter <= 0) {
+//            gameObjects.removeGameObject(this);
+//        }
+
+    }
 }
