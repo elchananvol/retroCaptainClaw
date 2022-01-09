@@ -10,7 +10,7 @@ There is an enemy that you need to defeat and take the treasure!
 if you lose your energy you will be dead once, but you have 2 life, ye?
 
 - you can go right and left and you have counters in the top left screen.
-- push on the control bottom to defeat enemy when you meet him and get the treasure that it preserves on.
+- push on the control bottom to defeat enemy while meeting and get the treasure that it preserves on.
 - when you on the floor you can jump high (press space) without moving right or left
 - and you can fly (press shift + space) but it takes energy.
 
