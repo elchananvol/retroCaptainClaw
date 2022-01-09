@@ -3,7 +3,7 @@ volberstan
 
 i work hard on this project and that what that happen for the end:
 i made retro to old game "captain claw" please read more detail on README.MD.
-if some reason its didnt work
+if some reason its didn't work please go to
 unique implementation:
 i made delete in range function to delete objects that are out of the screen.
 i use in toolkit library to read images.
