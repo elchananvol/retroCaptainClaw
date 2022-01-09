@@ -11,8 +11,11 @@ import danogl.gui.rendering.ImageRenderable;
 import danogl.gui.rendering.TextRenderable;
 import danogl.util.Counter;
 import danogl.util.Vector2;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.*;
 
 
 public class Avatar extends GameObject {
@@ -22,6 +25,7 @@ public class Avatar extends GameObject {
     private static final String ENERGY_IMG = "pepse/assets/claw_art/Light.jpg";
     private static final String TREASURE_IMG = "pepse/assets/claw_art/TREASURE.gif";
     private static final String CLAW_LIFE_IMG = "pepse/assets/claw_art/CLAWLIFE.gif";
+    private static final String CLAW_PUNCH_IMG = "pepse/assets/claw_art/PUNCH1.gif";
     private static final Vector2 SIZE_OF_TEXT =new Vector2(30,30);
     private static final Vector2 SIZE_OF_IMG = new Vector2(SIZE_OF_TEXT.y(),SIZE_OF_TEXT.y());
     private static final float MOVEMENTS_SPEED = 400;
@@ -37,6 +41,7 @@ public class Avatar extends GameObject {
     private static final int ENERGY =200;
     private static final int LIFE =2;
     private static final int TREASURE =0;
+    private final ImageRenderable punch;
     private GameObject counterTreasureObj;
     private GameObject counterEnergyObj;
     private GameObject counterLifeObj;
@@ -57,8 +62,10 @@ public class Avatar extends GameObject {
         this.inputListener =inputListener;
         this.imageReader =imageReader;
         this.gameObjects=gameObjects;
+
         image_right = new ImageRenderable(Toolkit.getDefaultToolkit().createImage(PATH_TO_IMG_RIGHT));
         img = imageReader.readImage(PATH_TO_IMG, true);
+        this.punch = imageReader.readImage(CLAW_PUNCH_IMG, true);
         transform().setAccelerationY(5000);
         physics().preventIntersectionsFromDirection(Vector2.ZERO);
         this.counter_life =new Counter(LIFE);
@@ -152,6 +159,9 @@ public class Avatar extends GameObject {
                 && energyCounter.value()>0){
             movement = movement.add(Vector2.UP);
             energyCounter.decrement();
+        }
+        if (inputListener.isKeyPressed(KeyEvent.VK_CONTROL)){
+            renderer().setRenderable(punch);
         }
         movement= movement.mult(MOVEMENTS_SPEED);
         setVelocity(movement);
