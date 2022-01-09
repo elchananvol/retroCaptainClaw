@@ -2,7 +2,6 @@ package pepse;
 
 
 
-"sfsdadfadsgsda"
 import danogl.GameManager;
 import danogl.GameObject;
 import danogl.collisions.Layer;
@@ -26,7 +25,7 @@ import java.util.Random;
 public class PepseGameManager extends GameManager {
     private static final Color SUN_HALO_COLOR = new Color(255, 255, 0, 40);
     private static final int DEY_NIGHT_CYCLE_LENGTH = 40;
-    private static final String PATH_TO_NUSIC = "pepse/assets/claw_art/Level_1.wav";
+    private static final String PATH_TO_MUSIC = "pepse/assets/claw_art/Level_1.wav";
     private static final Random random = new Random();
     private static final int INITIAL_AVATAR_LOCATION_X = 0;
     private static final float WINDOW_SIZE = 1.5f;
@@ -37,7 +36,7 @@ public class PepseGameManager extends GameManager {
     private Vector2 windowDimensions;
     private int lastLocationOfAvatar = 0;
     private Terrain terrain;
-    private EnemyFactory enmeis;
+    private EnemyFactory enemies;
     private WindowController windowController;
 
 
@@ -64,7 +63,7 @@ public class PepseGameManager extends GameManager {
         this.terrain = new Terrain(gameObjects(), Layer.STATIC_OBJECTS, windowDimensions, random.nextInt());
         this.trees = new pepse.world.trees.Tree(
                 gameObjects(), Layer.STATIC_OBJECTS + 1, random.nextInt(), terrain);
-        this.enmeis= new EnemyFactory(gameObjects(),terrain,random.nextInt());
+        this.enemies = new EnemyFactory(gameObjects(),terrain,random.nextInt());
         Vector2 initialAvatarLocation = new Vector2(INITIAL_AVATAR_LOCATION_X,
                 terrain.groundHeightAt(INITIAL_AVATAR_LOCATION_X) - Terrain.GROUND_SIZE);
         this.avatar = Avatar.create(gameObjects(), LAYER_OF_AVATAR, initialAvatarLocation, inputListener, imageReader);
@@ -75,7 +74,7 @@ public class PepseGameManager extends GameManager {
         int maxRangeAtInit = (int) (INITIAL_AVATAR_LOCATION_X + windowDimensions.x() * WINDOW_SIZE);
         terrain.createInRange(minRangeAtInit, maxRangeAtInit);
         trees.createInRange(minRangeAtInit, maxRangeAtInit);
-        enmeis.createInRange(minRangeAtInit, maxRangeAtInit);
+        enemies.createInRange(minRangeAtInit, maxRangeAtInit);
         setCamera(new Camera(avatar, Vector2.ZERO,
                 windowController.getWindowDimensions(),
                 windowController.getWindowDimensions()));
@@ -117,7 +116,7 @@ public class PepseGameManager extends GameManager {
      * @param soundReader Contains a single method: readSound, which reads a wav file from disk.
      */
     private void createBackground(ImageReader imageReader, SoundReader soundReader) {
-        Sound sound = soundReader.readSound(PATH_TO_NUSIC);
+        Sound sound = soundReader.readSound(PATH_TO_MUSIC);
         sound.playLooped();
         GameObject background = new GameObject(Vector2.ZERO,windowDimensions.subtract(Vector2.ONES),
                         imageReader.readImage(BACKGROUND_IMG,true));
@@ -177,15 +176,15 @@ public class PepseGameManager extends GameManager {
                 trees.deleteInRange(leftMin, leftMax);
                 terrain.createInRange(rightMin, rightMAX);
                 terrain.deleteInRange(leftMin, leftMax);
-                enmeis.createInRange(rightMin, rightMAX);
-                enmeis.deleteInRange(leftMin, leftMax);
+                enemies.createInRange(rightMin, rightMAX);
+                enemies.deleteInRange(leftMin, leftMax);
             } else {
                 trees.deleteInRange(rightMAX, rightMin);
                 trees.createInRange(leftMax,leftMin);
                 terrain.deleteInRange(rightMAX, rightMin);
                 terrain.createInRange(leftMax, leftMin);
-                enmeis.deleteInRange(rightMAX, rightMin);
-                enmeis.createInRange(leftMax, leftMin);
+                enemies.deleteInRange(rightMAX, rightMin);
+                enemies.createInRange(leftMax, leftMin);
 
 
             }
