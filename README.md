@@ -3,7 +3,7 @@
 you start this game with 2 life, and 200 energy.
 Your mission is to lead Claw to 1,000,000$!
 
-####But be aware!
+#### But be aware!
 
 There is an enemy that you need to defeat and take the treasure!
 
