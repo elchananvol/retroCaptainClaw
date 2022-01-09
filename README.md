@@ -19,7 +19,7 @@ if you lose your energy you will be dead once, but you have 2 life, ye?
 # go!
 
 
-- it's based on danoGameLab that helps create easy simple games.
+- it's based on danoGameLab that helps create simple games.
 - I took images of claws from fan forums.
 - I use the background image of level 6 of Claw original game, music from level 1, and all characters from all levels.
 
