@@ -52,12 +52,14 @@ public class Tree {
         float groundHeight = terrain.groundHeightAt(locationX);
         Vector2 treeSize =new Vector2(Block.SIZE, height*Block.SIZE);
         Vector2 treeTopLeftCorner =new Vector2(locationX, groundHeight - height*Block.SIZE);
-        Block tree = new Block(treeTopLeftCorner, treeSize, new RectangleRenderable(ColorSupplier.approximateColor(TREE_COLOR)));
+        Block tree = new Block(treeTopLeftCorner, treeSize,
+                new RectangleRenderable(ColorSupplier.approximateColor(TREE_COLOR)));
         map.put(locationX,tree);
         gameObjects.addGameObject(tree,layer);
 
         int square = (int)(height*THE_PART_OF_TREE_WILL_BE_COVER_WITH_LEAVES)*Block.SIZE;
-        for (float y = groundHeight - height*Block.SIZE-square; y <= groundHeight - height*Block.SIZE + square; y+=Block.SIZE) {
+        for (float y = groundHeight - height*Block.SIZE-square; y <= groundHeight - height*Block.SIZE + square;
+             y+=Block.SIZE) {
             for (int x = -square; x <= square; x+=Block.SIZE) {
                 if (x != 0 && random.nextDouble()<0.5) {
                     Leaf leaf = new Leaf(new Vector2(x+locationX, y),terrain);

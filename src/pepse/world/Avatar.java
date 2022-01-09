@@ -58,7 +58,8 @@ public class Avatar extends GameObject {
     Avatar(Vector2 topLeftCorner,
                   UserInputListener inputListener,
                   ImageReader imageReader,GameObjectCollection gameObjects,int layer) {
-        super(topLeftCorner, Vector2.ONES.mult(IMAGE_SIZE), imageReader.readImage(PATH_TO_IMG, true));
+        super(topLeftCorner, Vector2.ONES.mult(IMAGE_SIZE),
+                imageReader.readImage(PATH_TO_IMG, true));
         this.inputListener =inputListener;
         this.imageReader =imageReader;
         this.gameObjects=gameObjects;

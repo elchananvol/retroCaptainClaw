@@ -79,36 +79,6 @@ public class PepseGameManager extends GameManager {
         setCamera(new Camera(avatar, Vector2.ZERO,
                 windowController.getWindowDimensions(),
                 windowController.getWindowDimensions()));
-
-//        this.gameObjects().layers().shouldLayersCollide(Integer.MAX_VALUE, Layer.STATIC_OBJECTS + 1, true);
-
-//                String solider_path = "pepse/assets/enemy/mercat.gif";
-//        Renderable r =imageReader.readImage(solider_path,false);
-//        enemy s = new enemy(Vector2.ZERO,Vector2.ONES.mult(Terrain.GROUND_SIZE),r,terrain,400);
-//        gameObjects().addGameObject(s,Layer.UI);
-//        this.gameObjects().layers().shouldLayersCollide(Layer.UI, Layer.STATIC_OBJECTS, true);
-//        this.gameObjects().layers().shouldLayersCollide(Layer.UI, Integer.MAX_VALUE, true);
-
-//        float location = avatar.getTopLeftCorner().x();
-//        lastLocationOfAvatar = windowDimensions.x() * 10;
-//        update(1f);
-//        lastLocationOfAvatar = -windowDimensions.x() * 10;
-//        update(1f);
-//        trees.createInRange((int) (location-windowDimensions.x()*1.5),(int) (location+windowDimensions.x()*1.5));
-
-
-//        int x=(int) Math.floor((double) -50 / (Block.SIZE*3)) * Block.SIZE*3;
-//        int z= (int) Math.floor((double) 50 / (Block.SIZE*3)) * Block.SIZE*3;
-//        System.out.printf("%d,%d",x,z);
-//        Random a = new Random(30);
-//        Random b = new Random(30);
-//        System.out.println(a.nextInt());
-//        System.out.println(b.nextInt());
-//        System.out.println(a.nextInt());
-//        System.out.println(b.nextInt());
-
-
-
     }
 
     /**

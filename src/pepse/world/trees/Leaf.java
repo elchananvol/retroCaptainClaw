@@ -109,8 +109,10 @@ public class Leaf extends Block {
     private void shake(float angle) {
         if (getCenter().y() <= terrain.groundHeightAt(getCenter().x())) {
             renderer().setRenderableAngle(angle);
-            setCenter(getCenter().add(new Vector2(GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1), GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1))));
-            setDimensions(new Vector2(Math.max(getDimensions().x() + GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1), GOOD_NUMBER_FOR_SHAKE/2), getDimensions().y()));
+            setCenter(getCenter().add(new Vector2(GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1),
+                    GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1))));
+            setDimensions(new Vector2(Math.max(getDimensions().x() + GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1),
+                    GOOD_NUMBER_FOR_SHAKE/2), getDimensions().y()));
         }
     }
 

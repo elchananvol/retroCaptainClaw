@@ -44,9 +44,6 @@ class Enemy extends GameObject {
             setVelocity(getVelocity().mult(-1));
             renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
         }
-
-//        transform().setAccelerationY(1000);
-//        physics().preventIntersectionsFromDirection(Vector2.DOWN);
     }
 
     /**
@@ -69,51 +66,6 @@ class Enemy extends GameObject {
             wait = false;
         }
         setTopLeftCorner(new Vector2(locationX,terrain.groundHeightAt(getCenter().x())-dimensions.y()));
-
-
-//        System.out.println(getTopLeftCorner());
-//        System.out.println(Terrain.round(initialX)+5);
-//        System.out.println(Terrain.round(initialX )+Terrain.GROUND_SIZE-5 -Avatar.IMAGE_SIZE);
-//        System.out.println("FXGFG");
-//        if((Terrain.round(initialX)+5 >=getTopLeftCorner().x()))
-//        {
-//            renderer().setIsFlippedHorizontally(false);
-//            setVelocity(Vector2.RIGHT.mult(MOVEMENTS_SPEED));
-//        }
-//        if(Terrain.round(initialX )+Terrain.GROUND_SIZE-5 -Avatar.IMAGE_SIZE <=getTopLeftCorner().x())
-//        {
-//            renderer().setIsFlippedHorizontally(true);
-//            setVelocity(Vector2.LEFT.mult(MOVEMENTS_SPEED));
-//
-//        }
-//        setTopLeftCorner(new Vector2(locationX,Math.min(terrain.groundHeightAt(locationX),terrain.groundHeightAt(locationX-dimensions.x()))-dimensions.y()));
-
-
-//                || Terrain.round(initialX )+Terrain.GROUND_SIZE-5 -Avatar.IMAGE_SIZE <=getTopLeftCorner().x() ) && !wait){
-
-            //setTopLeftCorner(getTopLeftCorner().subtract(new Vector2(0,MOVEMENTS_SPEED)));
-
-//            setVelocity(getVelocity().multX(-1));
-//            System.out.println(getTopLeftCorner());
-//            System.out.println(getVelocity());
-//            System.out.println("here");
-
-//        }
-//        if(Terrain.round(initialX) <getTopLeftCorner().x() || Terrain.round(initialX +Terrain.GROUND_SIZE) >getTopLeftCorner().x() -Avatar.IMAGE_SIZE ){
-//            wait = false;
-//        }
-//        if (lastLocation == getTopLeftCorner().x()) {
-//
-//            int dir = getVelocity().x() < 0 ? -1 : 1;
-//            setTopLeftCorner(new Vector2(getTopLeftCorner().x() + dir*Avatar.IMAGE_SIZE , terrain.groundHeightAt(getTopLeftCorner().x() + dir) -Avatar.IMAGE_SIZE) );
-//            lastLocation=Float.MAX_VALUE;
-//        }
-//        else {
-//            lastLocation = getTopLeftCorner().x();
-//        }
-
-
-        //  setTopLeftCorner(new Vector2(getTopLeftCorner().x(),terrain.groundHeightAt(getTopLeftCorner().y())-Avatar.IMAGE_SIZE));
 
 
     }

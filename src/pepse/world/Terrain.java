@@ -48,7 +48,9 @@ public class Terrain {
         int z= round(x);
         if (!mapGroundHeight.containsKey(z))
         {
-            mapGroundHeight.put(z,windowDimensions.y()-  Block.round((float) noiseGenerator.noise(z) * GROUND_SIZE*3 + windowDimensions.y() / 5));
+            mapGroundHeight.put(z,windowDimensions.y()-
+                    Block.round((float) noiseGenerator.noise(z) *
+                            GROUND_SIZE*3 + windowDimensions.y() / 5));
         }
         return mapGroundHeight.get(z);
     }
@@ -63,7 +65,9 @@ public class Terrain {
         minX = round(minX);
         maxX = round(maxX);
         for (int i = minX; i <= maxX; i += GROUND_SIZE ) {
-            Block block = new Block(new Vector2(i,  groundHeightAt(i)), new Vector2(GROUND_SIZE, windowDimensions.y()*2f -groundHeightAt(i)), new RectangleRenderable(ColorSupplier.approximateColor(BASE_GROUND_COLOR)));
+            Block block = new Block(new Vector2(i,  groundHeightAt(i)),
+                    new Vector2(GROUND_SIZE, windowDimensions.y()*2f -groundHeightAt(i)),
+                    new RectangleRenderable(ColorSupplier.approximateColor(BASE_GROUND_COLOR)));
             map.put(i,block);
             gameObjects.addGameObject(block, groundLayer);
         }
