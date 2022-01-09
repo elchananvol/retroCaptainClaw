@@ -63,7 +63,7 @@ public class TreasureFactory {
         int treasureNumbers = random.nextInt(MAX_TREASURE);
         for (int i=0; i<=treasureNumbers;i++){
             int treasure_num = random.nextInt(allTreasures.length);
-            Vector2 locationOfTreasure = new Vector2(location.x() +random.nextInt(-RANDOM_SIZE,RANDOM_SIZE),location.y()+random.nextInt(-RANDOM_SIZE*2,RANDOM_SIZE));
+            Vector2 locationOfTreasure = new Vector2(location.x() +random.nextInt(RANDOM_SIZE*2)-RANDOM_SIZE,location.y()+random.nextInt(RANDOM_SIZE*3)-RANDOM_SIZE*2);
             Treasure treasure = new Treasure(locationOfTreasure,SIZE,allTreasures[treasure_num].getImg(),gameObjects,allTreasures[treasure_num].getValue(),counter);
             gameObjects.addGameObject(treasure);
         }

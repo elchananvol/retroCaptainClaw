@@ -25,7 +25,7 @@ public class Avatar extends GameObject {
     private static final String ENERGY_IMG = "pepse/assets/claw_art/Light.jpg";
     private static final String TREASURE_IMG = "pepse/assets/claw_art/TREASURE.gif";
     private static final String CLAW_LIFE_IMG = "pepse/assets/claw_art/CLAWLIFE.gif";
-    private static final String CLAW_PUNCH_IMG = "pepse/assets/claw_art/PUNCH1.gif";
+    private static final String CLAW_PUNCH_IMG = "pepse/assets/claw_art/punch1.gif";
     private static final Vector2 SIZE_OF_TEXT =new Vector2(30,30);
     private static final Vector2 SIZE_OF_IMG = new Vector2(SIZE_OF_TEXT.y(),SIZE_OF_TEXT.y());
     private static final float MOVEMENTS_SPEED = 400;
@@ -134,7 +134,7 @@ public class Avatar extends GameObject {
 
     /**
      * update the location of avatar
-     * @param deltaTime
+     * @param deltaTime deltaTime
      */
 
     @Override

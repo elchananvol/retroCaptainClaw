@@ -13,6 +13,8 @@ import java.util.Random;
 public class Leaf extends Block {
     private static final Color LEAVE_COLOR = new Color(50, 200, 30);
     private static final float FADEOUT_TIME = 30;
+    private static final float SHAKE_VALUE = 20f;
+    private static final float GOOD_NUMBER_FOR_SHAKE = 0.2F;
     private final Random random;
     private final Vector2 initial;
     private final Terrain terrain;
@@ -74,8 +76,8 @@ public class Leaf extends Block {
         new Transition<Float>(
                 this, // the game object being changed
                 this::shake, // the method to call
-                random.nextFloat(-20f, 20f), // initial transition value
-                random.nextFloat(-20f, 20f), // final transition value
+                random.nextFloat( )*SHAKE_VALUE*2 -SHAKE_VALUE, // initial transition value
+                random.nextFloat( )*SHAKE_VALUE*2 -SHAKE_VALUE, // final transition value
                 Transition.LINEAR_INTERPOLATOR_FLOAT, // use a cubic interpolator
                 10, // transtion fully over half a day
                 Transition.TransitionType.TRANSITION_LOOP,
@@ -87,8 +89,8 @@ public class Leaf extends Block {
         if (getCenter().y() <= terrain.groundHeightAt(getCenter().x())) {
             renderer().setRenderableAngle(angle);
 //                            leaf.setDimensions();
-            setCenter(getCenter().add(new Vector2(random.nextFloat(-0.2f, 0.2f), random.nextFloat(-0.2f, 0.2f))));
-            setDimensions(new Vector2(Math.max(getDimensions().x() + random.nextFloat(-0.2f, 0.2f), 0.1f), getDimensions().y()));
+            setCenter(getCenter().add(new Vector2(GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1), GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1))));
+            setDimensions(new Vector2(Math.max(getDimensions().x() + GOOD_NUMBER_FOR_SHAKE*(random.nextFloat( )*2 -1), 0.1f), getDimensions().y()));
         }
     }
 
