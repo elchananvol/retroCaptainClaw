@@ -62,7 +62,8 @@ public class PepseGameManager extends GameManager {
         this.trees = new pepse.world.trees.Tree(
                 gameObjects(), Layer.STATIC_OBJECTS + 1, random.nextInt(), terrain);
         this.enmeis= new EnemyFactory(gameObjects(),terrain,random.nextInt());
-        Vector2 initialAvatarLocation = new Vector2(INITIAL_AVATAR_LOCATION_X, terrain.groundHeightAt(INITIAL_AVATAR_LOCATION_X) - Terrain.GROUND_SIZE);
+        Vector2 initialAvatarLocation = new Vector2(INITIAL_AVATAR_LOCATION_X,
+                terrain.groundHeightAt(INITIAL_AVATAR_LOCATION_X) - Terrain.GROUND_SIZE);
         this.avatar = Avatar.create(gameObjects(), LAYER_OF_AVATAR, initialAvatarLocation, inputListener, imageReader);
         this.gameObjects().layers().shouldLayersCollide(LAYER_OF_AVATAR, Layer.STATIC_OBJECTS, true);
         this.gameObjects().layers().shouldLayersCollide(Layer.DEFAULT, LAYER_OF_AVATAR, true);

@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Ex5">
+    <output-path>$PROJECT_DIR$/out/artifacts/Ex5</output-path>
+    <root id="archive" name="Ex5.jar">
+      <element id="directory" name="pepse">
+        <element id="dir-copy" path="$PROJECT_DIR$/src/pepse" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/src/README" />
+    </root>
+  </artifact>
+</component>
