@@ -3,6 +3,7 @@ package pepse.world.trees;
 import danogl.collisions.GameObjectCollection;
 import danogl.gui.rendering.RectangleRenderable;
 import danogl.util.Vector2;
+import pepse.util.ColorSupplier;
 import pepse.world.Block;
 import pepse.world.Terrain;
 
@@ -43,6 +44,7 @@ public class Tree {
 
     /**
      * this function create tree with leaves that root start at locationX
+     * note: leaves are created at random layer so that will be ease to delete
      * @param locationX location at x
      * @param height height of tree
      */
@@ -50,7 +52,7 @@ public class Tree {
         float groundHeight = terrain.groundHeightAt(locationX);
         Vector2 treeSize =new Vector2(Block.SIZE, height*Block.SIZE);
         Vector2 treeTopLeftCorner =new Vector2(locationX, groundHeight - height*Block.SIZE);
-        Block tree = new Block(treeTopLeftCorner, treeSize, new RectangleRenderable(TREE_COLOR));
+        Block tree = new Block(treeTopLeftCorner, treeSize, new RectangleRenderable(ColorSupplier.approximateColor(TREE_COLOR)));
         map.put(locationX,tree);
         gameObjects.addGameObject(tree,layer);
 

@@ -36,7 +36,7 @@ class Enemy extends GameObject {
         Random random = new Random(Objects.hash(initialX, seed));
         range = random.nextInt( MIN_RANGE*(MIN_RANGE-1) * Terrain.GROUND_SIZE)+MIN_RANGE * Terrain.GROUND_SIZE ;
         renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
-        setVelocity(Vector2.RIGHT.mult(random.nextInt(MIN_SPEED,MAX_SPPED)));
+        setVelocity(Vector2.RIGHT.mult(random.nextInt(MAX_SPPED+MIN_SPEED)-MIN_SPEED));
         this.dimensions=dimensions;
         this.terrain = terrain;
 

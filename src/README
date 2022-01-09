@@ -1,12 +1,18 @@
 volberstan
 
 
-i work hard on this project and that what that happen for the end:
-i made retro to old game "captain claw" please read more detail on README.MD.
+I work hard on this project.
+unfortunately there is no enough time to do this game challenging well.
+and that what happen for the end:
+i made retro to old game "captain claw" please read more detail (with images!) on README.MD .
 if some reason its didn't work please go to github https://github.com/elchananvol/retroCaptainClaw
 try to branch from there.
 unique implementation:
 i made delete in range function to delete objects that are out of the screen.
-i use in toolkit library to read images, and for this i need to use in path that start from src/pepse
-and didn't succeed another way, and its maybe
-can make problem.
+i make that tree are in the background and the avatar didn't collies with them.
+i use in toolkit library to read gif images. and for this i need to use in path that start from src/pepse,
+and didn't succeed another way, and its can make problem. but it run on aquarium computers when i took from my git.
+in leaf class there is a lot magic numbers that determine the leaf movement in wind.
+in tree class i made the tree in one block all the trunk, than in the top third and above the tree with same
+ size in this part i make the leaves. for all tree i did all its leaves in unique layer so it will be ease to delete
+  when the avatar are away from this area

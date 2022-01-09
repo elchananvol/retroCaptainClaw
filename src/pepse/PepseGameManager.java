@@ -31,6 +31,7 @@ public class PepseGameManager extends GameManager {
     private static final float WINDOW_SIZE = 1.5f;
     private static final String BACKGROUND_IMG = "pepse/assets/claw_art/level6.jpg";
     private static final int LAYER_OF_AVATAR = Integer.MAX_VALUE;
+    private static final int WIN_SIZE = 1000000;
     private Tree trees;
     private Avatar avatar;
     private Vector2 windowDimensions;
@@ -62,7 +63,7 @@ public class PepseGameManager extends GameManager {
 
         this.terrain = new Terrain(gameObjects(), Layer.STATIC_OBJECTS, windowDimensions, random.nextInt());
         this.trees = new pepse.world.trees.Tree(
-                gameObjects(), Layer.STATIC_OBJECTS + 1, random.nextInt(), terrain);
+                gameObjects(), Layer.STATIC_OBJECTS - 1, random.nextInt(), terrain);
         this.enemies = new EnemyFactory(gameObjects(),terrain,random.nextInt());
         Vector2 initialAvatarLocation = new Vector2(INITIAL_AVATAR_LOCATION_X,
                 terrain.groundHeightAt(INITIAL_AVATAR_LOCATION_X) - Terrain.GROUND_SIZE);
@@ -138,10 +139,10 @@ public class PepseGameManager extends GameManager {
      */
     private void checkEndGame() {
         String prompt ="";
-            if (avatar.getLife()== 0) {
+            if (avatar.getLife()<= 0) {
                 prompt += "you lose";
         }
-        if (avatar.getTreasure() >= 1000000) {
+        if (avatar.getTreasure() >= WIN_SIZE) {
             prompt += "you win";
         }
         if (!prompt.isEmpty()) {
