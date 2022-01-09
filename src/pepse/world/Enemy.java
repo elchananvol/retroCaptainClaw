@@ -3,58 +3,74 @@ package pepse.world;
 import danogl.GameObject;
 import danogl.collisions.Collision;
 import danogl.gui.rendering.Renderable;
-import danogl.util.Counter;
 import danogl.util.Vector2;
-
 import java.util.Objects;
 import java.util.Random;
 
-public class enemy extends GameObject {
+/**
+ * presnt en enemy.
+ */
+class Enemy extends GameObject {
 
     private static final int MAX_SPPED = 400;
     private static final int MIN_SPEED = 30;
+    private static final int MIN_RANGE = 5;
     private final float initialX;
     private final int range;
-    private final static int MOVEMENTS_SPEED = 400;
     private final Terrain terrain;
     private final Vector2 dimensions;
-    private final Random random;
-
     private boolean wait = false;
     private Vector2 savedVelocity =null;
 
-
-    public enemy(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Terrain terrain, int seed) {
+    /**
+     * create enemy obj
+     * @param topLeftCorner topLeftCorner of the img on enemy
+     * @param dimensions dimensions of the treasure
+     * @param renderable renderable obj for present the enemy
+     * @param terrain terrain obj (for knowing height of ground each step
+     * @param seed seed for random.
+     */
+    public Enemy(Vector2 topLeftCorner, Vector2 dimensions, Renderable renderable, Terrain terrain, int seed) {
         super(topLeftCorner, dimensions, renderable);
         this.initialX = topLeftCorner.x();
-        this.random = new Random(Objects.hash(initialX, seed));
-        range = random.nextInt(5 * Terrain.GROUND_SIZE, 50 * Terrain.GROUND_SIZE);
+        Random random = new Random(Objects.hash(initialX, seed));
+        range = random.nextInt(MIN_RANGE * Terrain.GROUND_SIZE, MIN_RANGE*MIN_RANGE * Terrain.GROUND_SIZE);
         renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
         setVelocity(Vector2.RIGHT.mult(random.nextInt(MIN_SPEED,MAX_SPPED)));
-//        if (random.nextBoolean()) {
-//            setVelocity(getVelocity().mult(-1));
-//            renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
-//        }
         this.dimensions=dimensions;
         this.terrain = terrain;
+
+        if (random.nextBoolean()) {
+            setVelocity(getVelocity().mult(-1));
+            renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
+        }
 
 //        transform().setAccelerationY(1000);
 //        physics().preventIntersectionsFromDirection(Vector2.DOWN);
     }
 
+    /**
+     * make the enemy step inside a random range back and forth.
+     * @param deltaTime deltaTime
+     */
+
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         float locationX =getTopLeftCorner().x();
-        if (Math.abs( locationX- initialX) >= range && !wait) {
-            renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
-            //setTopLeftCorner(getTopLeftCorner().subtract(new Vector2(0,MOVEMENTS_SPEED)));
-            setVelocity(getVelocity().multX(-1));
-            wait = true;
+        if (Math.abs( locationX- initialX) >= range ) {
+            if(!wait) {
+                renderer().setIsFlippedHorizontally(!renderer().isFlippedHorizontally());
+                setVelocity(getVelocity().multX(-1));
+                wait = true;
+            }
         }
-        if (Math.abs(locationX- initialX) <= range) {
+        else {
             wait = false;
         }
+        setTopLeftCorner(new Vector2(locationX,terrain.groundHeightAt(getCenter().x())-dimensions.y()));
+
+
 //        System.out.println(getTopLeftCorner());
 //        System.out.println(Terrain.round(initialX)+5);
 //        System.out.println(Terrain.round(initialX )+Terrain.GROUND_SIZE-5 -Avatar.IMAGE_SIZE);
@@ -71,7 +87,6 @@ public class enemy extends GameObject {
 //
 //        }
 //        setTopLeftCorner(new Vector2(locationX,Math.min(terrain.groundHeightAt(locationX),terrain.groundHeightAt(locationX-dimensions.x()))-dimensions.y()));
-        setTopLeftCorner(new Vector2(locationX,terrain.groundHeightAt(getCenter().x())-dimensions.y()));
 
 
 //                || Terrain.round(initialX )+Terrain.GROUND_SIZE-5 -Avatar.IMAGE_SIZE <=getTopLeftCorner().x() ) && !wait){
@@ -103,26 +118,33 @@ public class enemy extends GameObject {
 
     }
 
+    /**
+     * enemy collide only with the avatar
+     * @param other - other game object
+     * @return true if other is avatar
+     */
     @Override
     public boolean shouldCollideWith(GameObject other) {
         return other instanceof Avatar;
     }
 
+    /**
+     * when Collision happen the enemy stop moving
+     * @param other the avatar
+     * @param collision -collision
+     */
     @Override
     public void onCollisionEnter(GameObject other, Collision collision) {
             savedVelocity = new Vector2(getVelocity().x(),getVelocity().y());
             setVelocity(Vector2.ZERO);
     }
 
-
+    /**
+     * when Collision stop the enemy continue moving (if it didnt kill, see Avatar class)
+     * @param other - the avatar
+     */
     @Override
     public void onCollisionExit(GameObject other) {
         setVelocity(savedVelocity);
-//        System.out.println(savedVelocity);
-//        savedVelocity =null;
-//        if (life_counter <= 0) {
-//            gameObjects.removeGameObject(this);
-//        }
-
     }
 }

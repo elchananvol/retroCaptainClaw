@@ -1,7 +1,4 @@
 package pepse.util;
-
-import java.util.Random;
-
 public class NoiseGenerator {
     private double seed;
     private long default_size;
@@ -10,11 +7,6 @@ public class NoiseGenerator {
 
     public NoiseGenerator(double seed) {
         this.seed = seed;
-        init();
-    }
-
-    public NoiseGenerator() {
-        this.seed = new Random().nextGaussian() * 255;
         init();
     }
 
@@ -56,44 +48,6 @@ public class NoiseGenerator {
 
     public double getSeed() {
         return this.seed;
-    }
-
-    public double noise(double x, double y, double z, int size) {
-        double value = 0.0;
-        double initialSize = size;
-
-        while (size >= 1) {
-            value += smoothNoise((x / size), (y / size), (z / size)) * size;
-            size /= 2.0;
-        }
-
-        return value / initialSize;
-    }
-
-    public double noise(double x, double y, double z) {
-        double value = 0.0;
-        double size = default_size;
-        double initialSize = size;
-
-        while (size >= 1) {
-            value += smoothNoise((x / size), (y / size), (z / size)) * size;
-            size /= 2.0;
-        }
-
-        return value / initialSize;
-    }
-
-    public double noise(double x, double y) {
-        double value = 0.0;
-        double size = default_size;
-        double initialSize = size;
-
-        while (size >= 1) {
-            value += smoothNoise((x / size), (y / size), (0f / size)) * size;
-            size /= 2.0;
-        }
-
-        return value / initialSize;
     }
 
     public double noise(double x) {

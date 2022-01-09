@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * this class present tree
+ */
 public class Tree {
     private static final Color TREE_COLOR =new Color(100, 50, 20);
     private static final float THE_PART_OF_TREE_WILL_BE_COVER_WITH_LEAVES = 1/3f;
