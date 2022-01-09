@@ -1,4 +1,4 @@
-# retro to captain claw
+# retro of captain claw
 ##### _fun project that I did at the Hebrew University in java class_
 you start this game with 2 life, and 200 energy.
 Your mission is to lead Claw to 1,000,000$!
