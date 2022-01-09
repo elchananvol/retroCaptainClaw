@@ -16,3 +16,6 @@ in leaf class there is a lot magic numbers that determine the leaf movement in w
 in tree class i made the tree in one block all the trunk, than in the top third and above the tree with same
  size in this part i make the leaves. for all tree i did all its leaves in unique layer so it will be ease to delete
   when the avatar are away from this area
+i made unique calculation so when the sun in center of the sky (middle day) the brightness of image is in maximum.
+the sky object is completely disappear because it is the same color of background img, its left only for show.
+i hope you will appreciate this work.

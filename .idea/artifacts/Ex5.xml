@@ -5,6 +5,7 @@
       <element id="directory" name="pepse">
         <element id="dir-copy" path="$PROJECT_DIR$/src/pepse" />
       </element>
+      <element id="file-copy" path="$PROJECT_DIR$/README.md" />
       <element id="file-copy" path="$PROJECT_DIR$/src/README" />
     </root>
   </artifact>
