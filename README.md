@@ -15,8 +15,8 @@ if you lose your energy you will be dead once, but you have 2 life, ye?
 - and you can fly (press shift + space) but it takes energy.
 
 
-### understand?
-# go!
+### understood?
+## go!
 
 
 - it's based on danoGameLab that helps create simple games.
