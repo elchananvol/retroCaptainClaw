@@ -1,12 +1,6 @@
-volberstan
-
-
-I work hard on this project.
-Unfortunately there is not enough time to do this challenging game well.
 and that what happen for the end:
-I made a retro to the old game "captain claw" please read in more detail (with images!) on README.MD.
-if some reason its didn't work please go to github https://github.com/elchananvol/retroCaptainClaw
-try to branch from there.
+I made a retro to the old game "captain claw" please read in more detail on README.MD.
+if some reason you cannot run the jur you can pull the source code from Github  https://github.com/elchananvol/retroCaptainClaw
 unique implementation:
 I made a delete in range function to delete objects that are out of the screen.
 I made that tree in the background and the avatar didn't collide with them.
@@ -19,5 +13,3 @@ in tree class i made the tree in one block all the trunk, than in the top third 
 i made a unique calculation so when the sun is in the center of the sky (middle day) the brightness of
  the image is at maximum.
 The sky object completely disappears because it is the same color of background img, it's left only for show.
-I hope you will appreciate this work.
-
